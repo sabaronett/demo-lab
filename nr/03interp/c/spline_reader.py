@@ -13,7 +13,7 @@ def splineplot(fignum, bctype, xa, ya, x, y_int):
     plt.axvline(color='k')
     plt.axhline(color='k')
     plt.plot(xa, ya, 'o', label='$y_i(x_i)$')
-    plt.plot(x, y_int, label='Cubic spline\n(%s)'%(bctype))
+    plt.plot(x, y_int, label='Cubic spline')
     plt.legend(loc='best', fontsize='x-large')
     plt.grid()
     plt.tight_layout()
@@ -35,4 +35,4 @@ def read(filename):
 
 xa, ya = read("dataset.txt")
 x, y_int = read("interp.txt")
-splineplot(1, "clamped", xa, ya, x, y_int)
+splineplot(1, "", xa, ya, x, y_int)
