@@ -7,9 +7,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include <float.h>
 
-void spline(const float* x, const float* y, const int n, float yp1, float ypn, float* y2)
+void spline(const double* x, const double* y, const int n, double yp1, double ypn, double* y2)
 /**
  * Given arrays x[0..(n-1)] and y[0..(n-1)] containing a tabulated function,
  * i.e., yᵢ = f(xᵢ), with x₀ < x₁ < ... < xₙ₋₁, and given values of yp1 and
@@ -24,7 +23,7 @@ void spline(const float* x, const float* y, const int n, float yp1, float ypn, f
  */
 {
     int i, k;
-    float p, qn, sig, un, u[n];
+    double p, qn, sig, un, u[n];
 
     if (yp1 > 0.99e30) // lower boundary condition is set to "natural"
         *y2 = u[0] = 0.0;
@@ -52,7 +51,7 @@ void spline(const float* x, const float* y, const int n, float yp1, float ypn, f
         *(y2+k) = *(y2+k) * *(y2+k+1) + u[k];
 }
 
-float splint(const float* xa, const float* ya, const float* y2a, const float x, int klo)
+double splint(const double* xa, const double* ya, const double* y2a, const double x, int klo)
 /**
  * Given the arrays xa[0..(n-1)] and ya[0..(n-1)], which tabulate a function
  * (with the xaᵢ's in order), and given the array y2a[0..(n-1)], which is the
@@ -62,7 +61,7 @@ float splint(const float* xa, const float* ya, const float* y2a, const float x, 
  * —Numerican Recipes for C, 2nd Ed., §3.3, p. 116
  */
 {
-    float h, b, a;
+    double h, b, a;
 
     // since sequential calls are in increasing order,
     // find and update place for current and future calls
@@ -80,7 +79,7 @@ float splint(const float* xa, const float* ya, const float* y2a, const float x, 
     return a**(ya+klo)+b**(ya+klo+1)+((a*a*a-a)**(y2a+klo)+(b*b*b-b)**(y2a+klo+1))*(h*h)/6.;
 }
 
-void output(float* x, float* y, int n, int interp)
+void output(double* x, double* y, int n, int interp)
 /* output xy values to readable text file */
 {
     FILE* file;
@@ -98,9 +97,9 @@ void output(float* x, float* y, int n, int interp)
     fclose(file);
 }
 
-void linspace(float lo, float hi, int n, float* arr)
+void linspace(double lo, double hi, int n, double* arr)
 {
-    float step = (hi - lo) / n;
+    double step = (hi - lo) / n;
 
     for (int i = 0; i < n; i++) {
         *(arr+i) = lo;
@@ -111,23 +110,30 @@ void linspace(float lo, float hi, int n, float* arr)
 int main()
 {
     int nints = 100;
-    float x[nints];
-    float y_int[nints];
+    double x[nints];
+    double y_int[nints];
     int klo = 0;
 
     // DATASET #1
-    int n = 4;
-    float xa[] = {0, 1, 5, 10};
-    float ya[] = {10, 10, 5, 0};
-    float y2a[n];
-    spline(xa, ya, n, 0, 0, y2a);
+    // int n = 4;
+    // double xa[] = {0, 1, 5, 10};
+    // double ya[] = {10, 10, 5, 0};
+    // double y2a[n];
+    // spline(xa, ya, n, 0, 0, y2a);
 
     // DATASET #2
     // int n = 6;
-    // float xa[] = {0, 2, 5, 6, 8, 10};
-    // float ya[] = {0, 1, 3, 6, 7, 10};
-    // float y2a[n];
+    // double xa[] = {0, 2, 5, 6, 8, 10};
+    // double ya[] = {0, 1, 3, 6, 7, 10};
+    // double y2a[n];
     // spline(xa, ya, n, 1e30, 1e30, y2a);
+
+    // DATASET #3
+    int n = 6;																					  // size of arrays
+	double xa[] = {0, 2500, 5000, 7500, 10000, 12500}; 											  // in yr
+	double ya[] = {1., 0.77880078307, 0.60653065971, 0.47236655274, 0.36787944117, 0.28650479686}; // in Msun
+    double y2a[n];
+    spline(xa, ya, n, 1e30, 1e30, y2a);
 
     linspace(0, 10, nints, x);
     for (int i = 0; i < nints; i++) {
