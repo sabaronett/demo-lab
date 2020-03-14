@@ -58,7 +58,7 @@ double splint(const double* xa, const double* ya, const double* y2a, const doubl
  * output from spline above, and given a value of x, this routine returns a
  * cubic-spline interpolated value y.
  * 
- * —Numerican Recipes for C, 2nd Ed., §3.3, p. 116
+ * —Numerical Recipes for C, 2nd Ed., §3.3, p. 116
  */
 {
     double h, b, a;
