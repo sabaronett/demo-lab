@@ -7,14 +7,23 @@ def splineplot(fignum, dset, bctype, xa, ya, x, y_int):
 
     Parameters
     ----------
-    fignum : integer, optional, default: None
+    fignum : integer
         Figure number to be displayed on plot.
 
-    dset : integer, optional, default: None
+    dset : integer
         Dataset number to be displayed on plot.
 
-    bctype : string, optional, default: None
+    bctype : string
         Boundary condition type to be displayed on plot.
+
+    xa : array_like
+        Monotonic array of independent values.
+    ya : 
+        Array of dependent values.
+    x : 
+        Monotonic array of independent values.
+    y_int : 
+        Array of interpolated values.
     """
     plt.figure(figsize=(5,5))
     plt.title(r'Figure %d. $Dataset \hspace{0.5}\#%d$'%(fignum, dset),
