@@ -1,5 +1,6 @@
 **/.ipynb_checkpoints/*
-nr/03interp/.vscode/settings.json
 *.out
 *.txt
 *.xlsx
+*.json
+*.code-workspace
